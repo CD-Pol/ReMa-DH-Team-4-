@@ -1,6 +1,6 @@
-#Team 4 workflow: 
+# Team 4 workflow: 
 
-###Table of contents
+### Table of contents
 
 [Project overview]
 [Data acquisition]
