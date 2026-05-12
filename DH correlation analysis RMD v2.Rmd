@@ -1,0 +1,117 @@
+---
+title: "Disinformation analysis YouTube"
+author: "Maggie Mazza, Casper Polhaar"
+date: "2026-05-11"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Setup
+
+```{r}
+#| label: load packages
+#| warning: false
+#| message: false
+
+#load neccessary packages
+library(tidyverse)
+library(tinytex)
+library(tidytext)
+library(knitr)
+library(corrr)
+
+# Read the datasets
+# (Ensure these files are in your working directory)
+video_meta <- read_csv("youtube_haitian_disinformation_video_meta.csv")
+comment_meta <- read_csv("youtube_haitian_disinformation_comment_reply_metadata.csv")
+
+# View the main dataset
+glimpse(video_meta)
+```
+
+## Data preparation and comment counting
+
+```{r}
+#| label: data-cleaning
+
+# Count comments per video
+comment_counts <- comment_meta %>%
+  group_by(video_id) %>% 
+  summarise(comment_count = n(), .groups = 'drop')
+
+# Merge, clean, and prep the dataset
+video_prep <- video_meta %>%
+  # Merge the comment counts
+  left_join(comment_counts, by = "video_id") %>%
+  # If a video had no comments in the comment file, replace NA with 0
+  mutate(comment_count = replace_na(comment_count, 0)) %>%
+  # Remove irrelevant variables
+  select(-any_of(c("date", "tags", "comments", "transcript", "transcript_str"))) %>%
+  # Create the dichotomous variable (filled with NA for now so you can code it)
+  mutate(video_debunking = NA_real_)
+
+# View the prepped data
+head(video_prep)
+```
+
+## Coding the video_debunking variable
+
+```{r}
+#| label: manual-coding-and-factors
+
+# 1. Manually list the exact video IDs that are DEBUNKING
+# (Replace these placeholders with your actual video IDs)
+debunking_videos <- c("xc0IkVmiN8o", "flRF5OQrURI", "6W0mzgcDNvY", "eytlX2OTKPs", "Ru34gTyHKlw", "0VSV99PXbbw", "ra2PLZlP1o0", "AuItvjZ1Tro", "oBCSCrhnfu0", "mr5Bv-evY9A", "DPCXxNXraKw", "M547oAXe3O4", "i0IvIekwz3c", "LKauI2Gtj4g")
+
+# 2. Apply the manual coding and create the factor
+video_final <- video_prep %>%
+  mutate(
+    # First, create the numeric version for your correlation analysis
+    video_debunking_num = ifelse(video_id %in% debunking_videos, 0, 1),
+    
+    # Next, create the factor version for your tables and summaries
+    video_debunking_factor = factor(video_debunking_num,
+                                    levels = c(0, 1),
+                                    labels = c("debunking", "not debunking"))
+  )
+
+# View a quick summary to make sure your factor applied correctly
+summary(video_final$video_debunking_factor)
+```
+
+## Summarising engagement
+
+```{r}
+#| label: summary-table
+
+# Use the factor version so the table reads "debunking" / "not debunking"
+overview_table <- video_final %>%
+  select(title, video_debunking_factor, views, likes, comment_count)
+
+kable(overview_table, 
+      caption = "Overview of Video Engagement",
+      format.args = list(big.mark = ","))
+```
+
+## Analysing the correlation
+
+```{r}
+#| label: correlation-analysis
+
+# Use the numeric version so the correlation math works
+correlation_data <- video_final %>%
+  select(video_debunking_num, views, likes, comment_count) %>%
+  drop_na()
+
+correlation_results <- correlation_data %>%
+  correlate(method = "spearman", diagonal = 1) 
+
+kable(correlation_results, 
+      digits = 3, 
+      caption = "Spearman Correlation Matrix")
+```
