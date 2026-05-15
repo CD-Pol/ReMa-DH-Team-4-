@@ -61,6 +61,35 @@ head(video_prep)
 
 ## Coding the video_debunking variable
 
+Since there were only 23 videos, manual coding was a very feasible option, and therefore chosen. This ensures no errors as a result of automation in the variable which is to be created below. The corresponding video_id's where found by opening dataframe 'video_prep' in the environment.
+
+|  |  |
+|-------------------------------------------|-----------------------------|
+| Title | Debunking / Not debunking |
+| Why Trump keeps pushing debunked claims about Haitian immigrants | Debunking |
+| Springfield mayor responds to JD Vance’s claims about Haitian immigrants | Not debunking |
+| Trump, Harris face off at the ABC News Presidential Debate  | Not debunking |
+| Trump amplifies false claims about Haitian immigrants eating pets  | Debunking |
+| Springfield, Ohio, man reported Haitian migrants snatching geese out of park just 2 weeks ago  | Not debunking |
+| Springfield resident describes impact of Haitian migrants on community  | Not debunking |
+| Springfield neighbors describe immigrant situation; say they believe pet-snatching story  | Not debunking |
+| JD Vance exposed for knowingly lying about ‘pet-eating’ rumors in Springfield, OH  | Debunking |
+| ‘You think this is the last cup of B.S.?’: Steele slams Trump campaign for lying about migrants  | Debunking |
+| Ohio residents rage at officials over Haitian migrant surge: ‘No vacancy’  | Not debunking |
+| Trump spreads more lies about Springfield, Ohio  | Debunking |
+| Springfield, Ohio resident: This is a dystopian nightmare  | Not debunking |
+| Haitian community in Springfield, Ohio, under threat after debunked comments  | Debunking |
+| Reporter Presses JD Vance About ‘Debunked False Claims’ About Haitians In Springfield, Ohio  | Debunking |
+| Criminal charges filed by Haitian nonprofit against Trump and JD Vance  | Debunking |
+| ‘NO DOGS OR CATS’ Haitian immigrant pleads with Trump and Springfield, Ohio residents  | Debunking |
+| Missing cat at center of Springfield conspiracy theory found hiding in basement  | Debunking |
+| Trump falsely claims Haitian migrants are eating pets in Ohio  | Debunking |
+| JD Vance claims on Ohio’s Haitian immigrants eating pets debunked  | Debunking |
+| Dana Bash and JD Vance clash over baseless claims about Haitian immigrants (Part 1/2)  | Debunking |
+| JD Vance reacts to Springfield father saying he politicized his son’s death (Part 2/2)  | Not debunking |
+| JD Vance defends amplifying false claims about immigrants  | Debunking |
+| Residents in Springfield, Ohio react to accusations of immigrants abducting and eating pets  | Not debunking |
+
 ```{r}
 #| label: manual-coding-and-factors
 
