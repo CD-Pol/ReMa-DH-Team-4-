@@ -7,4 +7,4 @@ Drawing on theories of the public sphere, platform capitalism, and affective med
 Using a dataset of YouTube news videos and comments related to the controversy, we categorize video titles into two groups: “debunking” and “non-debunking.” We then compare engagement metrics across these categories to explore whether debunking framing affects audience interaction differently from non-debunking framings.
 Rather than making generalized claims about misinformation online, this project approaches the dataset as a situated case study that highlights the relationship between media framing, platform logics, and engagement within contemporary digital news environments.
 
-**Please find the documentation of the workflow in the "documentation of workflow file**
+**Please find the documentation of the workflow in the "documentation of workflow" file**
